@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up and Sign In</title>
+    <style>
+            /* Basic styling for the page */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f6f8;
+            padding: 10px; /* Added padding for smaller screens */
+            box-sizing: border-box; /* Ensures padding is included in height/width calculations */
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 400px; /* Increased max-width for larger screens */
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px; /* Increased padding for better touch targets */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Ensures padding is included in width calculations */
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .toggle-link {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            cursor: pointer;
+            color: #007BFF;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            body {
+                padding: 20px; /* Increased padding for small screens */
+            }
+
+            .container {
+                padding: 15px; /* Adjusted padding for the container */
+            }
+
+            .btn {
+                font-size: 14px; /* Smaller font size for buttons */
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                width: 100%; /* Full width on very small screens */
+                padding: 10px; /* Reduced padding */
+            }
+
+            h2 {
+                font-size: 20px; /* Smaller heading for small screens */
+            }
+
+            .form-group input {
+                padding: 8px; /* Reduced padding for inputs */
+            }
+
+            .btn {
+                font-size: 14px; /* Smaller font size for buttons */
+                padding: 8px; /* Reduced padding for buttons */
+            }
+        }
+  
+
+
+
+
+    </style>
+</head>
+<body>
+
+    <div class="container" id="signupForm">
+        <h2>Sign Up</h2>
+        <div class="form-group">
+            <label for="signupUsername">Username</label>
+            <input type="text" id="signupUsername" required>
+        </div>
+        <div class="form-group">
+            <label for="signupPassword">Password</label>
+            <input type="password" id="signupPassword" required>
+        </div>
+        <button class="btn" onclick="signUp()">Sign Up</button>
+        <span class="toggle-link" onclick="toggleForm()">Already have an account? Sign In</span>
+    </div>
+
+    <div class="container" id="signinForm" style="display: none;">
+        <h2>Sign In</h2>
+        <div class="form-group">
+            <label for="signinUsername">Username</label>
+            <input type="text" id="signinUsername" required>
+        </div>
+        <div class="form-group">
+            <label for="signinPassword">Password</label>
+            <input type="password" id="signinPassword" required>
+        </div>
+        <button class="btn" onclick="signIn()">Sign In</button>
+        <span class="toggle-link" onclick="toggleForm()">Don't have an account? Sign Up</span>
+    </div>
+
+    <script>
+        if (users[username] === password) {
+    alert(`Welcome back! Glad to see you again.`);
+    localStorage.setItem('username', username); // Save username to localStorage
+    window.location.href = 'dashboard.html'; // Redirect to the dashboard
+}
+
+        // Basic toggle function to switch between Sign Up and Sign In forms
+        function toggleForm() {
+            document.getElementById('signupForm').style.display = 
+                document.getElementById('signupForm').style.display === 'none' ? 'block' : 'none';
+            document.getElementById('signinForm').style.display = 
+                document.getElementById('signinForm').style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Placeholder user data storage
+        let users = JSON.parse(localStorage.getItem('users')) || {};
+
+        function signUp() {
+            const username = document.getElementById("signupUsername").value;
+            const password = document.getElementById("signupPassword").value;
+
+            if (username && password) {
+                if (users[username]) {
+                    alert("Username already exists. Please choose another one.");
+                } else {
+                    users[username] = password;
+                    localStorage.setItem('users', JSON.stringify(users)); // Save users to localStorage
+                    alert("Sign Up successful! You can now sign in.");
+                    toggleForm(); // Switch to Sign In form
+                }
+            } else {
+                alert("Please enter both username and password.");
+            }
+        }
+
+        function signIn() {
+            const username = document.getElementById("signinUsername").value;
+            const password = document.getElementById("signinPassword").value;
+
+            if (username && password) {
+                // Retrieve users from localStorage
+                users = JSON.parse(localStorage.getItem('users')) || {};
+                
+                if (users[username] === password) {
+                    alert(`Welcome, ${username}!`);
+                    localStorage.setItem('username', username); // Save username to localStorage
+                    // Redirect to the dashboard
+                    window.location.href = 'dashboard.html'; // Make sure this file exists
+                } else {
+                    alert("Incorrect username or password.");
+                }
+            } else {
+                alert("Please enter both username and password.");
+            }
+        }
+    </script>
+
+</body>
+</html>
+
+
+
+
+
